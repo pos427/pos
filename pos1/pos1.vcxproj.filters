@@ -30,6 +30,15 @@
     <ClInclude Include="item.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="report.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="itemgroup.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pos.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
