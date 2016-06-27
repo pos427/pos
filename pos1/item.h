@@ -9,6 +9,7 @@ private:
 	string unit;
 	float price;
 	double discount;
+	bool promotion;
 public:
 	Item() {
 	}
@@ -20,6 +21,7 @@ public:
 		this->setUnit(unit);
 		this->setPrice(price);
 		this->setDiscount(1.00);
+		this->setPromotion(false);
 	}
 
 	Item(string barcode, string name, string unit, double price, double discount) {
@@ -28,6 +30,16 @@ public:
 		this->setUnit(unit);
 		this->setPrice(price);
 		this->setDiscount(discount);
+		this->setPromotion(false);
+	}
+
+	Item(string barcode, string name, string unit, double price, double discount,bool promotion) {
+		this->setBarcode(barcode);
+		this->setName(name);
+		this->setUnit(unit);
+		this->setPrice(price);
+		this->setDiscount(discount);
+		this->setPromotion(promotion);
 	}
 
 	string getName() {
@@ -52,6 +64,10 @@ public:
 		return discount;
 	}
 
+	bool getPromotion() {
+		return promotion;
+	}
+
 	void setBarcode(string barcode) {
 		this->barcode = barcode;
 	}
@@ -70,5 +86,9 @@ public:
 
 	void setDiscount(double discount) {
 		this->discount = discount;
+	}
+
+	void setPromotion(bool Promotion) {
+		this->promotion = Promotion;
 	}
 };
