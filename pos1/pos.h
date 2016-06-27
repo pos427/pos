@@ -1,26 +1,28 @@
+#pragma once
 #include "stdafx.h"
 
-
-class Pos {
+class Pos
+{
 public:
 	void DoPos(Report report)
 	{
-		cout << "***ÉÌµê¹ºÎïÇåµ¥***" << endl;
-        for (ItemGroup itemGroup : report.getItemGroupies()) {
-            cout<< "Ãû³Æ£º" << itemGroup.groupName() << "£¬" <<
-                            "ÊýÁ¿£º" << itemGroup.groupSize() << itemGroup.groupUnit() <<  "£¬" <<
-                            "µ¥¼Û£º" << itemGroup.groupPrice() << "(Ôª)" << "£¬" <<
-                            "Ð¡¼Æ£º" << itemGroup.subTotal() << "(Ôª)" << endl;
+		cout << "***å•†åº—è´­ç‰©æ¸…å•***" << endl;
+		for (ItemGroup itemGroup : report.getItemGroupies())
+		{
+			cout << "åç§°ï¼š" << itemGroup.groupName() << "ï¼Œ" <<
+				"æ•°é‡ï¼š" << itemGroup.groupSize() << itemGroup.groupUnit() << "ï¼Œ" <<
+				"å•ä»·ï¼š" << setprecision(2) << fixed << itemGroup.groupPrice() << "(å…ƒ)" << "ï¼Œ" <<
+				"å°è®¡ï¼š" << itemGroup.subTotal() << "(å…ƒ)" << endl;
 
-        }
-       cout<< "----------------------" <<endl;
-	   cout<< "×Ü¼Æ£º"<< report.getTotal() << "(Ôª)" <<endl;
+		}
+		cout << "----------------------" << endl;
+		cout << "æ€»è®¡ï¼š" << report.getTotal() << "(å…ƒ)" << endl;
 
-        double saving = report.getSaving();
-        if (saving == 0) {
-            cout<<"**********************" << endl;
-			cout << "½ÚÊ¡£º"<< saving<<"(Ôª)"<<endl;
-			cout << "**********************" << endl;
-        }
+		double saving = report.getSaving();
+		if (saving > 0)
+		{
+			cout << "èŠ‚çœï¼š" << saving << "(å…ƒ)" << endl;
+		}
+		cout << "**********************" << endl;
 	}
 };
