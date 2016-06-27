@@ -1,28 +1,48 @@
+#pragma once
 #include "stdafx.h"
 
-class Report{
+class Report {
 private:
-	list<ItemGroup> itemGroupies;
-public :
-    Report(list<ItemGroup> itemGroupies){
-        this->itemGroupies = itemGroupies;
-    }
+	vector<ItemGroup> itemGroupies;
+	map<string, vector<Item>> groupByItemBarCode(vector<Item> items)
+	{
+		map<string, vector<Item>> map;
+		for (Item item : items) {
+			string itemBarCode = item.getBarcode();
+			map[itemBarCode].push_back(item);
+		}
+		return map;
+	}
+public:
+	Report(vector<ItemGroup> itemGroupies) {
+		this->itemGroupies = itemGroupies;
+	}
 
-    list<ItemGroup> &getItemGroupies() {
-        return itemGroupies;
-    }
+	Report(vector<Item> items){
+		map<string, vector<Item>> mapper = groupByItemBarCode(items);
+		map<string, vector<Item>>::iterator  iter;
 
-    double getTotal(){
-        double result = 0.00;
-        for (ItemGroup itemGroup : itemGroupies)
-            result += itemGroup.subTotal();
-        return result;
-    }
+		for (iter = mapper.begin(); iter != mapper.end(); iter++)
+		{
+			itemGroupies.push_back(iter->second);
+		}
+	}
 
-    double getSaving(){
-        double result = 0.00;
-        for (ItemGroup itemGroup : itemGroupies)
-            result += itemGroup.saving();
-        return result;
-    }
+	vector<ItemGroup> &getItemGroupies() {
+		return itemGroupies;
+	}
+
+	double getTotal() {
+		double result = 0.00;
+		for (ItemGroup itemGroup : itemGroupies)
+			result += itemGroup.subTotal();
+		return result;
+	}
+
+	double getSaving() {
+		double result = 0.00;
+		for (ItemGroup itemGroup : itemGroupies)
+			result += itemGroup.saving();
+		return result;
+	}
 };
