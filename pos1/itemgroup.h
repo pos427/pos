@@ -40,11 +40,21 @@ public:
 		return items[0].getPrice();
 	}
 
+	bool groupPromotion() {
+		if (items.size() >= 3 && items[0].getPromotion()) {
+			return true;
+		}
+		return false;
+	}
+
 	double subTotal() {
 		double result = 0.00;
 		for (Item item : items)
 		{
 			result += item.getPrice() * item.getDiscount();
+		}
+		if (groupPromotion()) {
+			result -= items[0].getPrice();
 		}
 		return result;
 	}
@@ -53,6 +63,9 @@ public:
 		double result = 0.00;
 		for (Item item : items)
 			result += item.getPrice() * (1 - item.getDiscount());
+		if (groupPromotion()) {
+			result += items[0].getPrice();
+		}
 		return result;
 	}
 };
