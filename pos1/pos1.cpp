@@ -1,4 +1,4 @@
-// pos1.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// pos1.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -6,26 +6,16 @@
 #include "itemgroup.h"
 #include "report.h"
 #include "pos.h"
-
-
-int _tmain(int argc, _TCHAR* argv[])
+#include "inputparser.h"
+int main()
 {
-	Item item("ITEM000000", "¿É¿Ú¿ÉÀÖ", "Æ¿", 3.0);
-	Item item2("ITEM000001", "¿É¿Ú¿ÉÀÖ", "Æ¿", 3.0);
-
-	list<Item> items;
-	items.push_back(item);
-
-	ItemGroup itemgroup(items);
-	list<ItemGroup> itemGroupies;
-	itemGroupies.push_back(itemgroup);
-
-	Report report(itemGroupies);
+	InputParser inputparser("in2.json");
+	Report report(inputparser.Parser().getItems());
 	Pos pos;
-	
 
 	pos.DoPos(report);
+	
 	system("pause");
-	return 0;
+    return 0;
 }
 
