@@ -15,6 +15,18 @@ public:
 				"小计：" << itemGroup.subTotal() << "(元)" << endl;
 
 		}
+		if (report.hasPromotion()) {
+			cout << "----------------------" << endl;
+			cout << "挥泪赠送商品：" << endl;
+			for (ItemGroup itemGroup : report.getItemGroupies())
+			{
+				if (itemGroup.groupPromotion())
+				{
+					cout << "名称：" << itemGroup.groupName() << "，" << "数量：" << 1 << itemGroup.groupUnit() << endl;
+				}
+
+			}
+		}
 		cout << "----------------------" << endl;
 		cout << "总计：" << report.getTotal() << "(元)" << endl;
 
