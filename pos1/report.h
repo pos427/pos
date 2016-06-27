@@ -32,6 +32,13 @@ public:
 		return itemGroupies;
 	}
 
+	bool hasPromotion() {
+		bool result = false;
+		for (ItemGroup itemGroup : itemGroupies)
+			result |= itemGroup.groupPromotion();
+		return result;
+	}
+
 	double getTotal() {
 		double result = 0.00;
 		for (ItemGroup itemGroup : itemGroupies)
