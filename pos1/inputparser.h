@@ -28,7 +28,7 @@ public:
 
 	ItemGroup Parser(){
 		ItemGroup items;
-		FILE* fp = fopen(itemsFile.c_str(), "rb"); // 闈濿indows骞冲彴浣跨敤"r"
+		FILE* fp = fopen(itemsFile.c_str(), "rb"); // 非Windows平台使用"r"
 		char readBuffer[65536];
 		FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 		Document d;
@@ -60,7 +60,7 @@ private:
 
 	vector<string> getBoughtItemBarCodes(){
 		vector<string> BoughtItemBarCodes;
-		FILE* fp = fopen(itemsFile.c_str(), "rb"); // 闈濿indows骞冲彴浣跨敤"r"
+		FILE* fp = fopen(itemsFile.c_str(), "rb"); // 非Windows平台使用"r"
 		char readBuffer[65536];
 		FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 		Document d;
@@ -76,7 +76,7 @@ private:
 
 	map<string, Item> getItemIndexes(){
 		map<string, Item> ItemIndexes;
-		FILE* fp = fopen(indexFile.c_str(), "rb"); // 闈濿indows骞冲彴浣跨敤"r"
+		FILE* fp = fopen(indexFile.c_str(), "rb"); // 非Windows平台使用"r"
 		char readBuffer[65536];
 		FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 		Document d;
