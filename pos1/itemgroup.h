@@ -1,46 +1,58 @@
+#pragma once
 #include "stdafx.h"
 
 class ItemGroup {
 private:
-	list<Item> items;
-	list<Item>::iterator it;
+	vector<Item> items;
 public:
-	ItemGroup(list<Item> items) {
-        this->items = items;
-    }
+	ItemGroup()
+	{
+		 
+	}
+
+	ItemGroup(vector<Item> items) {
+		this->items = items;
+	}
+
+	void Add(Item itm)
+	{
+		items.push_back(itm);
+	}
+
+	vector<Item> &getItems()
+	{
+		return items;
+	}
 
 	string groupName() {
-		it = items.begin();
-        return it->getName();
-    }
+		return items[0].getName();
+	}
 
-    int groupSize() {
+	int groupSize() {
 		return items.size();
-    }
+	}
 
-    string groupUnit() {
-		it = items.begin();
-        return it->getUnit();
-    }
+	string groupUnit() {
+		return items[0].getUnit();
+	}
 
-    double groupPrice() {
-		it = items.begin();
-        return it->getPrice();
-    }
+	double groupPrice() {
+		return items[0].getPrice();
+	}
 
-    double subTotal() {
-        double result = 0.00;
-        for (Item item : items)
+	double subTotal() {
+		double result = 0.00;
+		for (Item item : items)
 		{
-            result += item.getPrice() * item.getDiscount();
+			result += item.getPrice() * item.getDiscount();
 		}
-        return result;
-    }
+		return result;
+	}
 
-    double saving() {
-        double result = 0.00;
-        for (Item item : items)
-            result += item.getPrice() * (1 - item.getDiscount());
-        return result;
-    }
+	double saving() {
+		double result = 0.00;
+		for (Item item : items)
+			result += item.getPrice() * (1 - item.getDiscount());
+		return result;
+	}
 };
