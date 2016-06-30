@@ -16,6 +16,9 @@ public :
 		this->testIfhaveBothPrommotionAndDiscountDoWhatCountThree();
 		this->testShouldSupportDiscountWhenHavingOneFavourableItem();
 		this->testUserVipDiscount();
+		this->testUserVipAddPoint1();
+		this->testUserVipAddPoint2();
+		this->testUserVipAddPoint3();
 		cout << "All test Passed" << endl;
 	}
 private:
@@ -37,7 +40,6 @@ private:
 		assert(actualShoppingList == expectedShoppingList);
 	}
 
-
 	void testGetCorrectShoppingListForTwoSameItems() {
 		// given
 		ShoppingCart shoppingCart;
@@ -55,7 +57,6 @@ private:
 		assert(actualShoppingList == expectedShoppingList);
 	}
 
-
 	void testGetCorrectShoppingListForMultipleItemsWithMultipleTypes() {
 		// given
 		ShoppingCart shoppingCart;
@@ -71,7 +72,6 @@ private:
 			"***商店购物清单***\n名称：雪碧，数量：1瓶，单价：2.00(元)，小计：2.00(元)\n名称：可口可乐，数量：1瓶，单价：3.00(元)，小计：3.00(元)\n----------------------\n总计：5.00(元)\n**********************\n";
 		assert(actualShoppingList == expectedShoppingList);
 	}
-
 
 	void testGetCorrectShoppingListWhenDifferentItemHaveSameItemName(){
 		// given
@@ -106,8 +106,6 @@ private:
 		assert(actualShoppingList == expectedShoppingList);
 	}
 
-
-
 	void testIfhaveBothPrommotionAndDiscountDoWhat(){
 		// given
 		ShoppingCart shoppingCart;
@@ -123,8 +121,6 @@ private:
 			"***商店购物清单***\n名称：雪碧，数量：1瓶，单价：2.00(元)，小计：1.60(元)\n----------------------\n总计：1.60(元)\n节省：0.40(元)\n**********************\n";
 		assert(actualShoppingList == expectedShoppingList);
 	}
-
-
 
 	void testIfhaveBothPrommotionAndDiscountDoWhatCountThree(){
 		// given
@@ -152,7 +148,7 @@ private:
 		return ss.str();
 	}
 
-	 void testUserVipDiscount()
+	void testUserVipDiscount()
 	{
         // given
         User user("USERTEST","Test",true);
@@ -178,8 +174,95 @@ private:
                         + "**********************\n";
         assert(actualShoppingList == expectedShoppingList);
     }
+
+	void testUserVipAddPoint1(){
+		// given
+		User user("USERTEST", "Test", true);
+		user.setPoint(0);
+		ShoppingCart shoppingCart(user);
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+
+
+		// when
+		Pos pos;
+		Report report(shoppingCart.getItems(), shoppingCart.getUser());
+		string actualShoppingList = pos.GetShoppingList(report);
+
+
+		// then
+		string expectedShoppingList =
+			"***商店购物清单***\n会员编号： USERTEST\t会员积分：1分\n----------------------\n" + GetTime() +
+			+"----------------------\n"
+			+ "名称：雪碧，数量：5瓶，单价：2.00(元)，小计：6.00(元)\n"
+			+ "----------------------\n"
+			+ "总计：6.00(元)\n"
+			+ "节省：4.00(元)\n"
+			+ "**********************\n";
+		assert(actualShoppingList == expectedShoppingList);
+	}
+
+	void testUserVipAddPoint2(){
+		// given
+		User user("USERTEST", "Test", true);
+		user.setPoint(300);
+		ShoppingCart shoppingCart(user);
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+
+
+		// when
+		Pos pos;
+		Report report(shoppingCart.getItems(), shoppingCart.getUser());
+		string actualShoppingList = pos.GetShoppingList(report);
+
+
+		// then
+		string expectedShoppingList =
+			"***商店购物清单***\n会员编号： USERTEST\t会员积分：303分\n----------------------\n" + GetTime() +
+			+"----------------------\n"
+			+ "名称：雪碧，数量：5瓶，单价：2.00(元)，小计：6.00(元)\n"
+			+ "----------------------\n"
+			+ "总计：6.00(元)\n"
+			+ "节省：4.00(元)\n"
+			+ "**********************\n";
+		assert(actualShoppingList == expectedShoppingList);
+	}
+
+	void testUserVipAddPoint3(){
+		// given
+		User user("USERTEST", "Test", true);
+		user.setPoint(600);
+		ShoppingCart shoppingCart(user);
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+		shoppingCart.add(Item("ITEM000000", "雪碧", "瓶", 2.00, 0.8, false, 0.75));
+
+
+		// when
+		Pos pos;
+		Report report(shoppingCart.getItems(), shoppingCart.getUser());
+		string actualShoppingList = pos.GetShoppingList(report);
+
+
+		// then
+		string expectedShoppingList =
+			"***商店购物清单***\n会员编号： USERTEST\t会员积分：605分\n----------------------\n" + GetTime() +
+			+"----------------------\n"
+			+ "名称：雪碧，数量：5瓶，单价：2.00(元)，小计：6.00(元)\n"
+			+ "----------------------\n"
+			+ "总计：6.00(元)\n"
+			+ "节省：4.00(元)\n"
+			+ "**********************\n";
+		assert(actualShoppingList == expectedShoppingList);
+	}
+
 };
-
-
-
-
