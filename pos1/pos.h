@@ -1,40 +1,83 @@
 #pragma once
 #include "stdafx.h"
+#include <time.h>
 
 class Pos
 {
 public:
-	void DoPos(Report report)
+	string GetShoppingList(Report report)
 	{
-		cout << "***ÉÌµê¹ºÎïÇåµ¥***" << endl;
-		for (ItemGroup itemGroup : report.getItemGroupies())
+		string result;
+		stringstream ss;
+		ss << "***å•†åº—è´­ç‰©æ¸…å•***" << endl;
+		User user = report.getUser();
+		vector<ItemGroup> itemgroup=report.getItemGroupies();
+		for( int i = 0;i<itemgroup.size();i++){
+			if(user.isisVip()==true){
+                report.getItemGroupies()[i].setVip(user.isisVip());
+            }
+		}
+		if(user.isisVip()) {
+            int newpoint = PointCalc(user.getPoint(),report.getTotal());
+            user.setPoint(newpoint);
+			ss << "ä¼šå‘˜ç¼–å·ï¼š "<< user.getId() << "\tä¼šå‘˜ç§¯åˆ†ï¼š" << user.getPoint() << "åˆ†" << endl;
+			ss << "----------------------" << endl;
+
+        }
+		if(user.getId()!=""){
+			const time_t t = time(NULL);
+			struct tm* ct = localtime(&t);
+			ss << "æ‰“å°æ—¶é—´ï¼š" << (ct->tm_year+1900) << "å¹´" << (ct->tm_mon+1) << "æœˆ" << ct->tm_mday << "æ—¥ " << ct->tm_hour << ":" << ct->tm_min << ":" << ct->tm_sec << endl;
+			ss << "----------------------" << endl;
+		}
+		for (ItemGroup itemGroup : itemgroup)
 		{
-			cout << "Ãû³Æ£º" << itemGroup.groupName() << "£¬" <<
-				"ÊýÁ¿£º" << itemGroup.groupSize() << itemGroup.groupUnit() << "£¬" <<
-				"µ¥¼Û£º" << setprecision(2) << fixed << itemGroup.groupPrice() << "(Ôª)" << "£¬" <<
-				"Ð¡¼Æ£º" << itemGroup.subTotal() << "(Ôª)" << endl;
+			if(user.isisVip()==true){
+                itemGroup.setVip(user.isisVip());
+            }
+			ss << "åç§°ï¼š" << itemGroup.groupName() << "ï¼Œ" <<
+				"æ•°é‡ï¼š" << itemGroup.groupSize() << itemGroup.groupUnit() << "ï¼Œ" <<
+				"å•ä»·ï¼š" << setprecision(2) << fixed << itemGroup.groupPrice() << "(å…ƒ)" << "ï¼Œ" <<
+				"å°è®¡ï¼š" << itemGroup.subTotal() << "(å…ƒ)" << endl;
 
 		}
 		if (report.hasPromotion()) {
-			cout << "----------------------" << endl;
-			cout << "»ÓÀáÔùËÍÉÌÆ·£º" << endl;
-			for (ItemGroup itemGroup : report.getItemGroupies())
+			ss << "----------------------" << endl;
+			ss << "æŒ¥æ³ªèµ é€å•†å“ï¼š" << endl;
+			for (ItemGroup itemGroup : itemgroup)
 			{
 				if (itemGroup.groupPromotion())
 				{
-					cout << "Ãû³Æ£º" << itemGroup.groupName() << "£¬" << "ÊýÁ¿£º" << 1 << itemGroup.groupUnit() << endl;
+					ss << "åç§°ï¼š" << itemGroup.groupName() << "ï¼Œ" << "æ•°é‡ï¼š" << itemGroup.PromotionNum() << itemGroup.groupUnit() << endl;
 				}
 
 			}
 		}
-		cout << "----------------------" << endl;
-		cout << "×Ü¼Æ£º" << report.getTotal() << "(Ôª)" << endl;
+		ss << "----------------------" << endl;
+		ss << "æ€»è®¡ï¼š" << report.getTotal() << "(å…ƒ)" << endl;
 
 		double saving = report.getSaving();
 		if (saving > 0)
 		{
-			cout << "½ÚÊ¡£º" << saving << "(Ôª)" << endl;
+			ss << "èŠ‚çœï¼š" << saving << "(å…ƒ)" << endl;
 		}
-		cout << "**********************" << endl;
+		ss << "**********************" << endl;
+		result = ss.str();
+		return result;
 	}
+
+	int PointCalc(int point,double price){
+        int addpoint = (int)price / 5;
+        int result = point;
+        if(0<= point && point <= 200){
+            result += (1 * addpoint);
+        }
+        else if(200<point && point<=500){
+            result += (3*addpoint);
+        }
+        else if(500<point){
+            result += (5*addpoint);
+        }
+        return result;
+    }
 };
