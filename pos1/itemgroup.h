@@ -4,13 +4,15 @@
 class ItemGroup {
 private:
 	vector<Item> items;
+	bool Vip;
 public:
 	ItemGroup()
 	{
-		 
+		 Vip = false;
 	}
 
 	ItemGroup(vector<Item> items) {
+		Vip = false;
 		this->items = items;
 	}
 
@@ -47,25 +49,41 @@ public:
 		return false;
 	}
 
+	int PromotionNum(){
+		int itemnum = items.size();
+		int promotionnum = itemnum / 3;
+		return promotionnum;
+	}
+
+	bool getVip(){
+        return this->Vip;
+    }
+
+	void setVip(bool vip){
+        this->Vip = vip;
+    }
+
 	double subTotal() {
 		double result = 0.00;
-		for (Item item : items)
-		{
-			result += item.getPrice() * item.getDiscount();
+		int itemnum = items.size();
+		int discountnum = itemnum % 3;
+		int promotionnum = itemnum / 3;
+		Item item = items[0];
+		result = item.getPrice() * itemnum;
+		if(groupPromotion()==true){
+			result -= item.getPrice() * promotionnum;
+			result -= (item.getPrice() * (1 - item.getDiscount() * (Vip==true?item.getVipDiscount():1.0))) * discountnum;
 		}
-		if (groupPromotion()) {
-			result -= items[0].getPrice();
+		else{
+			result -= (item.getPrice() * (1 - item.getDiscount() * (Vip==true?item.getVipDiscount():1.0))) * itemnum;
 		}
 		return result;
 	}
 
 	double saving() {
 		double result = 0.00;
-		for (Item item : items)
-			result += item.getPrice() * (1 - item.getDiscount());
-		if (groupPromotion()) {
-			result += items[0].getPrice();
-		}
+		Item item = items[0];
+		result = item.getPrice() * items.size()- subTotal();
 		return result;
 	}
 };
